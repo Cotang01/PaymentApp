@@ -16,6 +16,11 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
 
   migrate:
     build: .
@@ -51,6 +56,11 @@ services:
     volumes:
       - .:/app
       - /app/.venv
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
     
 volumes:
   postgres_data:
