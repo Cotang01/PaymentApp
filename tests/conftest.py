@@ -69,10 +69,7 @@ async def test_client_factory(test_async_sessionmaker) -> ClientFactory:
         
         async def overrides_get_db() -> AsyncGenerator[AsyncSession]:
             async with test_async_sessionmaker() as session:
-                try:
-                    yield session
-                finally:
-                    await session.rollback()
+                yield session
         
         client = AsyncClient(transport=ASGITransport(app=app), 
                              base_url="http://test")
