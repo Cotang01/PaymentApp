@@ -14,6 +14,6 @@ DB_URL = URL.create(
     )
 
 engine = create_async_engine(url=DB_URL, echo=True)
-AsyncSessionLocal = async_sessionmaker(bind=engine)
+AsyncSessionLocal = async_sessionmaker(bind=engine, expire_on_commit=False)
 
 Base = declarative_base()
