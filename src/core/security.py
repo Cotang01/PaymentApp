@@ -1,3 +1,6 @@
+from datetime import UTC, datetime, timedelta
+
+import jwt
 from pwdlib import PasswordHash
 
 from src.app.config import settings
@@ -10,7 +13,7 @@ def get_password_hash(password: str) -> str:
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return password_hash.verify(hashed_password, plain_password)
+    return password_hash.verify(plain_password, hashed_password)
 
 
 # TODO implement token creation and verification functions
