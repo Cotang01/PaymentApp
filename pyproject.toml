@@ -16,6 +16,7 @@ dependencies = [
     "pydantic-settings>=2.16.2",
     "pydantic[email]>=2.5",
     "pyjwt[crypto]>=2.15.1",
+    "python-multipart>=0.0.34",
     "sqlalchemy[asyncio]>=2.1.6",
     "uvicorn>=0.54.0",
 ]
@@ -25,6 +26,7 @@ dev = [
     "faker>=40.44.0",
     "httpx>=0.28.1",
     "mypy>=2.4.1",
+    "pgmem>=1.18.2",
     "polyfactory>=3.5.0",
     "pytest>=9.2.0",
     "pytest-asyncio>=1.4.1",

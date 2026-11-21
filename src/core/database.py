@@ -13,7 +13,7 @@ DB_URL = URL.create(
     database=settings.POSTGRES_DB
     )
 
-engine = create_async_engine(url=DB_URL, echo=True)
+engine = create_async_engine(url=DB_URL, echo=settings.DEBUG)
 AsyncSessionLocal = async_sessionmaker(bind=engine, expire_on_commit=False)
 
 Base = declarative_base()

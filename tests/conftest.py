@@ -17,7 +17,7 @@ from sqlalchemy.ext.asyncio import (
 
 from src.core.database import Base
 from src.core.dependencies import get_db
-from src.features.user.models import User
+from src.features.accounts.models import User
 
 ClientFactory = Callable[[FastAPI], AbstractAsyncContextManager[AsyncClient]]
 

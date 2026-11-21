@@ -22,7 +22,7 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # add your model's MetaData object here
-from src.features.user import models  # noqa: F401
+from src.features.accounts import models  # noqa: F401
 
 # for 'autogenerate' support
 # from myapp import mymodel

@@ -1169,6 +1169,7 @@ dependencies = [
     { name = "pydantic", extra = ["email"] },
     { name = "pydantic-settings" },
     { name = "pyjwt", extra = ["crypto"] },
+    { name = "python-multipart" },
     { name = "sqlalchemy", extra = ["asyncio"] },
     { name = "uvicorn" },
 ]
@@ -1178,6 +1179,7 @@ dev = [
     { name = "faker" },
     { name = "httpx" },
     { name = "mypy" },
+    { name = "pgmem" },
     { name = "polyfactory" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
@@ -1198,6 +1200,7 @@ requires-dist = [
     { name = "pydantic", extras = ["email"], specifier = ">=2.5" },
     { name = "pydantic-settings", specifier = ">=2.16.2" },
     { name = "pyjwt", extras = ["crypto"], specifier = ">=2.15.1" },
+    { name = "python-multipart", specifier = ">=0.0.34" },
     { name = "sqlalchemy", extras = ["asyncio"], specifier = ">=2.1.6" },
     { name = "uvicorn", specifier = ">=0.54.0" },
 ]
@@ -1207,11 +1210,24 @@ dev = [
     { name = "faker", specifier = ">=40.44.0" },
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "mypy", specifier = ">=2.4.1" },
+    { name = "pgmem", specifier = ">=1.18.2" },
     { name = "polyfactory", specifier = ">=3.5.0" },
     { name = "pytest", specifier = ">=9.2.0" },
     { name = "pytest-asyncio", specifier = ">=1.4.1" },
     { name = "pytest-cov", specifier = ">=7.1.0" },
     { name = "python-dotenv", specifier = ">=1.2.4" },
+]
+
+[[package]]
+name = "pgmem"
+version = "1.18.2"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b4/8b/4eb0747be66f7c133c438c51a2ccb5f246734f3b6bbc379f3bd8d7e3694c/pgmem-1.18.2-py3-none-macosx_13_0_arm64.whl", hash = "sha256:71de9fcd574ffa1339fbd31de023fe2bcb5cc770398fc3718fec68cb1050e9e6", size = 16477282, upload-time = "2026-10-05T23:47:16.694Z" },
+    { url = "https://files.pythonhosted.org/packages/ef/87/abb5d02807ac98024dda14959432d0c0bc86a522e1ed8e874288d640695b/pgmem-1.18.2-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.musllinux_1_1_aarch64.whl", hash = "sha256:0c116efe9dc37046ad88e5169c8fba84a6a14bf2ab003ca539b52ecd0e15209b", size = 16131218, upload-time = "2026-10-05T23:47:19.029Z" },
+    { url = "https://files.pythonhosted.org/packages/59/80/cf22130088f412d3c1c6c0c8292d350c36cc99f4867aa9507262df70ae24/pgmem-1.18.2-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.musllinux_1_1_x86_64.whl", hash = "sha256:b6ebcc75e8bf3e06720b1f3e22f17ff20bae7d693d4bc21101d6b0d2807db80a", size = 17359815, upload-time = "2026-10-05T23:47:21.197Z" },
+    { url = "https://files.pythonhosted.org/packages/d4/56/2f854711bbdc9753502e2f9aca7e1bd462f067de4b2024a3d6bd7a5a8621/pgmem-1.18.2-py3-none-win_amd64.whl", hash = "sha256:e51ae6a92f1d62979379502d4bf1e7746ebcb4eb238016a7df9071428e88b62a", size = 17482015, upload-time = "2026-10-05T23:47:24.323Z" },
+    { url = "https://files.pythonhosted.org/packages/47/90/1709821532132d4540ef2851f4b62f10213b3d5f4a2d60b05dd11e36d795/pgmem-1.18.2-py3-none-win_arm64.whl", hash = "sha256:79f59788b8da701c563c769f5487eea5a9fd518c71ce82c6b9577370d740e7c6", size = 16176694, upload-time = "2026-10-05T23:47:26.731Z" },
 ]
 
 [[package]]
@@ -1485,6 +1501,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/74/26/2fbeedb218a787a5eea551c7532cac4e009f83d689dd2faa0d0353473f86/python_dotenv-1.2.4.tar.gz", hash = "sha256:f0d53e69935a851c0dcc78f3ab7aaccd8cabef0b92382b576b824212902873c0", size = 60824, upload-time = "2026-10-01T05:36:10Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/60/d1/38f3a3405989a89ac18390803e70c6ad7c7760da4f9b83cbeca0c44a0c72/python_dotenv-1.2.4-py3-none-any.whl", hash = "sha256:42269a8a5b3fd54ffa6f3d84b18abed50064717576b4ecf03dc4a55d8aa04fdc", size = 23266, upload-time = "2026-10-01T05:36:08.633Z" },
+]
+
+[[package]]
+name = "python-multipart"
+version = "0.0.34"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/7e/c0/c753d487a83d873f6946cee6cbc26cea3fe59a476ad0de99a14938a2fbd8/python_multipart-0.0.34.tar.gz", hash = "sha256:b998ae90ca6e1e363261ce2e0e230281b8af53867b757970abd69ee9edcd843a", size = 52456, upload-time = "2026-11-16T10:40:38.261Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f5/0e/090c52b122d8ec5fa37942c1410fea9cf04ce98bca0c84dde7f0aa11594d/python_multipart-0.0.34-py3-none-any.whl", hash = "sha256:ebacd224bd686eee2f9aa1066a657affe07435a185834e05e5235e2e59173e91", size = 32585, upload-time = "2026-11-16T10:40:37.119Z" },
 ]
 
 [[package]]
