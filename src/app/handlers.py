@@ -5,6 +5,7 @@ from src.features.accounts.auth_service import (
     InvalidCredentialsError,
     SessionNotFoundError,
 )
+from src.features.accounts.dependencies import InvalidAccessToken
 from src.features.accounts.user_repository import DuplicateEmailError
 from src.features.accounts.user_service import (
     PermissionDeniedError,
@@ -55,4 +56,11 @@ def register_exception_handlers(app: FastAPI) -> None:
         ):
         return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, 
                             content={"detail": str(exc)})
-        
+    
+    @app.exception_handler(InvalidAccessToken)
+    async def invalid_access_token_handler(
+        request: Request, exc: InvalidAccessToken
+        ):
+         return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, 
+                            content={"detail": str(exc)},
+                            headers={"WWW-Authenticate": "Bearer"})

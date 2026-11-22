@@ -52,5 +52,6 @@ async def get_refresh_tokens(
     db: DbSession,
     admin_user: AdminUser,
     offset: int = Query(0, ge=0), 
-    limit: int = Query(10, ge=0, le=100), ):
+    limit: int = Query(10, ge=0, le=100)
+    ):
     return await auth_service.get_refresh_tokens(db, offset, limit)

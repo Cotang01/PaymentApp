@@ -1,7 +1,7 @@
 from typing import Annotated
 
 import jwt
-from fastapi import Depends, HTTPException, Response, status
+from fastapi import Depends, HTTPException, Response
 
 from src.app.config import settings
 from src.core.dependencies import AccessToken, DbSession
@@ -9,14 +9,16 @@ from src.features.accounts.models import User
 from src.features.accounts.user_service import get_user_by_id
 
 
+class InvalidAccessToken(Exception):
+    pass
+
+
 async def get_current_user(
     db: DbSession, 
     access_token: AccessToken
     ) -> User:
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
+    credentials_exception = InvalidAccessToken(
+        "Could not validate credentials"
     )
     try:
         payload = jwt.decode(access_token, 
