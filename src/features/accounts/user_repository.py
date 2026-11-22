@@ -29,8 +29,16 @@ async def get_user_by_email(db: AsyncSession, email: str) -> User | None:
     return (await db.execute(stmt)).scalar_one_or_none()
 
 
-async def get_user_list(db: AsyncSession) -> Sequence[User]:  # TODO add chunking
-    stmt = select(User)
+async def get_user_list(
+    db: AsyncSession, 
+    offset: int, 
+    limit: int
+    ) -> Sequence[User]:
+    stmt = (
+        select(User)
+        .offset(offset)
+        .limit(limit)
+        )
     return (await db.scalars(stmt)).all()
 
 

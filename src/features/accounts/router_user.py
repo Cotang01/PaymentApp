@@ -1,9 +1,10 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Query, status
 
 from src.core.dependencies import DbSession
 from src.features.accounts import user_service
 from src.features.accounts.dependencies import AdminUser, CurrentUser
 from src.features.accounts.schemas import (
+    PageResponse,
     UserCreate,
     UserPatch,
     UserResponse,
@@ -28,9 +29,14 @@ async def delete_user(db: DbSession, user_id: int, admin_user: AdminUser):
     return await user_service.delete_user(db, user_id)
 
 
-@router.get("", response_model=list[UserResponse])
-async def get_users(db: DbSession, admin_user: AdminUser):  # TODO: pagination 
-    return await user_service.get_user_list(db)
+@router.get("", response_model=PageResponse[UserResponse])
+async def get_users(
+    db: DbSession, 
+    admin_user: AdminUser, 
+    offset: int = Query(0, ge=0),
+    limit: int = Query(20, ge=0, le=100),
+    ):
+    return await user_service.get_user_list(db, offset, limit)
 
 
 @router.get("/{user_id}", response_model=UserResponse)

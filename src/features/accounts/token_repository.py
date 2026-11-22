@@ -74,8 +74,10 @@ async def create_refresh_token(db: AsyncSession,
     return (await db.execute(stmt)).scalar_one()
 
 
-async def get_refresh_tokens(db: AsyncSession):
+async def get_refresh_tokens(db: AsyncSession, offset: int, limit: int):
      stmt = (
         select(RefreshToken)
+        .offset(offset)
+        .limit(limit)
         )
      return (await db.execute(stmt)).scalars().all()

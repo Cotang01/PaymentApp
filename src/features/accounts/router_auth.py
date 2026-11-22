@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Response
+from fastapi import APIRouter, Query, Request, Response
 
 from src.core.dependencies import AuthForm, DbSession
 from src.features.accounts import auth_service
@@ -48,5 +48,9 @@ async def register(db: DbSession, response: Response, data: UserCreate):
 
 
 @router.get("/tokens")
-async def get_refresh_tokens(db: DbSession, admin_user: AdminUser):
-    return await auth_service.get_refresh_tokens(db)
+async def get_refresh_tokens(
+    db: DbSession,
+    admin_user: AdminUser,
+    offset: int = Query(0, ge=0), 
+    limit: int = Query(10, ge=0, le=100), ):
+    return await auth_service.get_refresh_tokens(db, offset, limit)

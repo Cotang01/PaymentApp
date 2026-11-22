@@ -1,8 +1,10 @@
-from typing import ClassVar, Self
+from typing import ClassVar, Self, TypeVar
 
 from pydantic import BaseModel, EmailStr, Field, model_validator
 
 from src.features.accounts.dto import UserBase
+
+T = TypeVar("T")
 
 
 class UserCreate(UserBase):
@@ -34,6 +36,13 @@ class UserResponse(UserBase):
     id: int
     
     model_config: ClassVar = {"from_attributes": True}
+
+
+class PageResponse[T](BaseModel):
+    items: list[T]
+    total: int
+    limit: int
+    offset: int
 
 
 class AccessTokenResponse(BaseModel):

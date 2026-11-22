@@ -21,8 +21,12 @@ class PermissionDeniedError(Exception):
     pass
 
 
-async def get_user_list(db: AsyncSession) -> Sequence[User]:
-    return await user_repo.get_user_list(db)
+async def get_user_list(
+    db: AsyncSession, 
+    offset: int, 
+    limit: int
+    ) -> Sequence[User]:
+    return await user_repo.get_user_list(db, offset, limit)
 
 
 async def get_user_by_id(db: AsyncSession, user_id: int) -> User:

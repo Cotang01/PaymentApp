@@ -79,5 +79,5 @@ async def login(db: AsyncSession,
     return {"access_token": access, "refresh_token": raw_refresh}
 
 
-async def get_refresh_tokens(db: AsyncSession):
-    return await token_repo.get_refresh_tokens(db)
+async def get_refresh_tokens(db: AsyncSession, offset: int, limit: int):
+    return await token_repo.get_refresh_tokens(db, offset, limit)
