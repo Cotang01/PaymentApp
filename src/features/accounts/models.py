@@ -11,7 +11,7 @@ class User(Base):
     
     id: Mapped[int] = mapped_column(primary_key=True)
     first_name: Mapped[str] = mapped_column(String(20))
-    second_name: Mapped[str] = mapped_column(String(20))
+    last_name: Mapped[str] = mapped_column(String(20))
     email: Mapped[str] = mapped_column(
         String(255), unique=True, nullable=False, index=True
         )
@@ -22,7 +22,7 @@ class User(Base):
     
     def __repr__(self):
         return f"User(first_name={self.first_name}" \
-               f"second_name={self.second_name}" \
+               f"last_name={self.last_name}" \
                f"email={self.email})" \
                f"is_superuser={self.is_superuser}" \
 

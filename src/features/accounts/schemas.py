@@ -20,7 +20,7 @@ class UserUpdate(UserBase):
 class UserPatch(BaseModel):
     """schema for updating user, has optional data to save to db"""
     first_name: str | None = Field(default=None, max_length=20)
-    second_name: str | None = Field(default=None, max_length=20)
+    last_name: str | None = Field(default=None, max_length=20)
     email: EmailStr | None = Field(default=None, max_length=255)
     password: str | None = Field(default=None, max_length=255)
 
@@ -40,7 +40,6 @@ class UserResponse(UserBase):
 
 class PageResponse[T](BaseModel):
     items: list[T]
-    total: int
     limit: int
     offset: int
 
