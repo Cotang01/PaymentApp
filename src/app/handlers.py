@@ -7,6 +7,7 @@ from src.features.accounts.auth_service import (
 )
 from src.features.accounts.user_repository import DuplicateEmailError
 from src.features.accounts.user_service import (
+    PermissionDeniedError,
     UserAlreadyExistsError,
     UserNotFoundError,
 )
@@ -47,3 +48,11 @@ def register_exception_handlers(app: FastAPI) -> None:
         ):
          return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, 
                             content={"detail": str(exc)})
+
+    @app.exception_handler(PermissionDeniedError)
+    async def permission_denied_handler(
+        request: Request, exc: PermissionDeniedError
+        ):
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, 
+                            content={"detail": str(exc)})
+        

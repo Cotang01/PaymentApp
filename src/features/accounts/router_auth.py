@@ -2,7 +2,11 @@ from fastapi import APIRouter, Request, Response
 
 from src.core.dependencies import AuthForm, DbSession
 from src.features.accounts import auth_service
-from src.features.accounts.dependencies import set_refresh_in_cookie
+from src.features.accounts.dependencies import (
+    AdminUser,
+    CurrentUser,
+    set_refresh_in_cookie,
+)
 from src.features.accounts.schemas import AccessTokenResponse, UserCreate
 
 router = APIRouter(prefix="/auth")
@@ -17,7 +21,12 @@ async def refresh(db: DbSession, request: Request, response: Response):
 
 
 @router.post("/logout")
-async def logout(db: DbSession, request: Request, response: Response):
+async def logout(
+    db: DbSession, 
+    request: Request, 
+    response: Response, 
+    current_user: CurrentUser
+    ):
     refresh_token = request.cookies.get("refresh_token")
     await auth_service.invalidate_refresh_token(db, refresh_token)
     response.delete_cookie("refresh_token", path="/auth")
@@ -39,5 +48,5 @@ async def register(db: DbSession, response: Response, data: UserCreate):
 
 
 @router.get("/tokens")
-async def get_refresh_tokens(db: DbSession):
+async def get_refresh_tokens(db: DbSession, admin_user: AdminUser):
     return await auth_service.get_refresh_tokens(db)

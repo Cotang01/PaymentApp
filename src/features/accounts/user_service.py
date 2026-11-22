@@ -17,6 +17,10 @@ class UserAlreadyExistsError(Exception):
     pass
 
 
+class PermissionDeniedError(Exception):
+    pass
+
+
 async def get_user_list(db: AsyncSession) -> Sequence[User]:
     return await user_repo.get_user_list(db)
 
@@ -50,7 +54,11 @@ async def delete_user(db: AsyncSession, user_id: int) -> bool:
     return res
 
 
-async def update_user(db: AsyncSession, user_id: int, user_data: UserUpdate) -> User:
+async def update_user(
+    db: AsyncSession, user_id: int, user_data: UserUpdate, current_user: User
+    ) -> User:
+    if not current_user.is_superuser and current_user.id != user_id:
+        raise PermissionDeniedError("You can not change other users")
     changed_data = user_data.model_dump()
     changed_data["hashed_password"] = get_password_hash(changed_data.pop("password"))
     user = await user_repo.update_user(db, user_id, changed_data)
@@ -59,7 +67,11 @@ async def update_user(db: AsyncSession, user_id: int, user_data: UserUpdate) -> 
     return user
 
 
-async def patch_user(db: AsyncSession, user_id: int, user_data: UserPatch) -> User:
+async def patch_user(
+    db: AsyncSession, user_id: int, user_data: UserPatch, current_user: User
+    ) -> User:
+    if not current_user.is_superuser and current_user.id != user_id:
+        raise PermissionDeniedError("You can not change other users")
     changed_data = user_data.model_dump(exclude_unset=True)
     if "password" in changed_data:
         changed_data["hashed_password"] = get_password_hash(changed_data.pop("password"))
