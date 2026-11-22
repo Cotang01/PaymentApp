@@ -39,7 +39,7 @@ async def get_user_by_id(db: AsyncSession, user_id: int) -> User:
 async def create_user(db: AsyncSession, user: UserCreate) -> User:
     user_dto = UserCreateDTO(
         first_name=user.first_name,
-        second_name=user.second_name,
+        last_name=user.last_name,
         email=user.email,
         hashed_password=get_password_hash(user.password),
     )
