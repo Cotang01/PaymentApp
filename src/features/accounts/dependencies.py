@@ -51,7 +51,7 @@ def set_refresh_in_cookie(response: Response, refresh_token: str) -> None:
         key="refresh_token",
         value=refresh_token,
         httponly=True,
-        secure=settings.DEBUG,  # True requires HTTPS
+        secure=not settings.DEBUG,  # True requires HTTPS
         samesite="lax",
         path="/auth"
     )
