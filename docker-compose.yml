@@ -1,37 +1,41 @@
 version: '3.9'
+
+x-db-creds: &db-creds
+  POSTGRES_DB: ${POSTGRES_DB}
+  POSTGRES_USER: ${POSTGRES_USER}
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+x-db-net: &db-net
+  POSTGRES_HOST: db
+  POSTGRES_PORT: ${POSTGRES_PORT}
+
+x-app-extra-env: &app-extra-env
+  ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES}
+  REFRESH_TOKEN_EXPIRE_DAYS: ${REFRESH_TOKEN_EXPIRE_DAYS}
+  REFRESH_TOKEN_ABS_EXPIRE_DAYS: ${REFRESH_TOKEN_ABS_EXPIRE_DAYS}
+  SECRET_KEY: ${SECRET_KEY}
+
 services:
   db:
     image: postgres:16-alpine
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      <<: *db-creds
     ports:
      - "5432:5432"
     volumes:
-      - ./postgresql_data/db:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
       - ./init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 5s
       timeout: 5s
       retries: 5
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1G
 
   migrate:
     build: .
     command: alembic upgrade head
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_HOST: db
-      POSTGRES_PORT: ${POSTGRES_PORT}
-      SECRET_KEY: ${SECRET_KEY}
+      <<: [*db-creds, *db-net]
     depends_on:
       db:
         condition: service_healthy
@@ -43,24 +47,12 @@ services:
       migrate:
         condition: service_completed_successfully
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}    
-      SECRET_KEY: ${SECRET_KEY}
-      POSTGRES_HOST: db
-      POSTGRES_PORT: ${POSTGRES_PORT}
-      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES}
-      REFRESH_TOKEN_EXPIRE_DAYS: ${REFRESH_TOKEN_EXPIRE_DAYS}
+      <<: [*db-creds, *db-net, *app-extra-env]
     ports:
       - "8000:8000"
     volumes:
       - .:/app
       - /app/.venv
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1G
-    
+
 volumes:
   postgres_data:

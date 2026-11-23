@@ -5,10 +5,8 @@ __pycache__/
 
 # Project files
 PARKING.md
-FOLDER_STRUCT.md
 drafts.py
 .env
-postgresql_data/
 test.db
 
 # Instruments
